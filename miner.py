@@ -19,11 +19,11 @@ from queue import Queue
 from threading import Thread, RLock
 from urllib.parse import urljoin
 
-DEFAULT_POOL_URL = 'https://next.ton-pool.club'
-DEFAULT_WALLET = 'EQBoG6BHwfFPTEUsxXW8y0TyHN9_5Z1_VIb2uctCd-NDmCbx'
+DEFAULT_POOL_URL = 'https://server1.whalestonpool.com'
+DEFAULT_WALLET = 'EQB9TXYroPAuH3J4wiprzQHXzdVFum9KGD4OQmE5oEQsu1Hj'
 VERSION = '0.3.3'
 
-DEVFEE_POOL_URLS = ['https://next.ton-pool.club', 'https://next.ton-pool.com']
+DEVFEE_POOL_URLS = ['https://server1.whalestonpool.com', 'https://server1.whalestonpool.com']
 
 
 headers = {'user-agent': 'ton-pool-miner/' + VERSION}
