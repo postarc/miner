@@ -8,10 +8,10 @@ Download the latest release of our miner at https://github.com/TON-Pool/miner/re
 
 ```
 # Windows
-miner-windows.exe run https://next.ton-pool.club <your_wallet>
+miner.exe https://next.ton-pool.club <your_wallet>
 
 # Linux
-./miner-linux run https://next.ton-pool.club <your_wallet>
+./miner https://next.ton-pool.club <your_wallet>
 ```
 
 If you have updated your hardware settings (like overclocking) or if you accidentally run our miner twice, make sure to delete `benchmark_data.txt` before running it again to get optimal hashrate.
