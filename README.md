@@ -70,7 +70,7 @@ An optional dependency is `websocket-client`, if you install it you can get more
 
 ## Dev Fee
 
-You are allowed to use our miner in any mining pool, but if you don't use [TON-Pool.com](https://ton-pool.com/), then 1% of your income will be donated to the developers.
+No fee
 
 ## License
 
