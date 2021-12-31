@@ -32,23 +32,26 @@ Go to [releases](https://github.com/TON-Pool/miner/releases), download a RaveOS 
 
 Create a new wallet, select our mining pool, and the newly uploaded miner, and you're ready to start mining.
 
-### Troubleshooting
+### Usage 
 
-If miner is not working properly, you can describe the problem you are experiencing in [issues](https://github.com/TON-Pool/miner/issues), and attach a screenshot of miner output, as well as your configuration information (graphics card model, operating system, etc.)
+usage: miner.exe [-h] [-p PLATFORM] [-d DEVICE] [-t THREADS] [--stats]
+                 [--stats-devices] [--debug] [--silent]
+                 POOL WALLET
 
-Here are also some common problems and corresponding solutions.
+positional arguments:
+  POOL             Pool URL
+  WALLET           Your wallet address
 
-#### It doesn't work on my AMD GPU
-
-We are working on this.
-
-#### I can't connect to pool
-
-We have two mining domains, `https://next.ton-pool.com` and `https://next.ton-pool.club`. If any domain doesn't work, please try to switch to the other one.
-
-#### I see twice as many cards in the output
-
-Try to add argument `-p 0`.
+optional arguments:
+  -h, --help       show this help message and exit
+  -p PLATFORM      Platform ID List, separated by commas (e.g. 0,1).
+  -d DEVICE        Device ID List, separated by commas (e.g 0-0,1,2-1). You
+                   can use A-B where A is platform ID and B is device ID.
+  -t THREADS       Number of threads. This is applied for all devices.
+  --stats          Dump stats to stats.json
+  --stats-devices  Dump devices information to devices.json
+  --debug          Show all logs
+  --silent         Only show warnings and errors
 
 ## Run Python code
 
