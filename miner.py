@@ -1,6 +1,3 @@
-# This file belongs to TON-Pool.com Miner (https://github.com/TON-Pool/miner)
-# License: GPLv3
-
 import argparse
 import base64
 import hashlib
