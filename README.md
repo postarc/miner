@@ -1,6 +1,6 @@
 # TON-Pool Miner
 
-Miner from [TON-Pool.com](https://ton-pool.com/)
+Miner from [TON-Pool.com](https://ton-pool.com/) and other pools
 
 ## Instructions
 
