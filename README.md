@@ -34,7 +34,8 @@ Create a new wallet, select our mining pool, and the newly uploaded miner, and y
 
 ### Usage 
 
-```miner.exe [-h] [-p PLATFORM] [-d DEVICE] [-t THREADS] [--stats]
+```
+miner.exe [-h] [-p PLATFORM] [-d DEVICE] [-t THREADS] [--stats]
                  [--stats-devices] [--debug] [--silent]
                  POOL WALLET
 ```
