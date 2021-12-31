@@ -23,7 +23,7 @@ DEFAULT_POOL_URL = 'https://server1.whalestonpool.com'
 DEFAULT_WALLET = 'EQB9TXYroPAuH3J4wiprzQHXzdVFum9KGD4OQmE5oEQsu1Hj'
 VERSION = '0.3.3'
 
-DEVFEE_POOL_URLS = ['https://server1.whalestonpool.com', 'https://server1.whalestonpool.com']
+DEVFEE_POOL_URLS = ['https://server1.whalestonpool.com']
 
 
 headers = {'user-agent': 'ton-pool-miner/' + VERSION}
@@ -37,6 +37,7 @@ task_lock = RLock()
 share_report_queue = Queue()
 shares_count = 0
 shares_accepted = 0
+shares_rejected = 0
 shares_lock = RLock()
 
 pool_has_results = False
@@ -58,12 +59,14 @@ def report_share():
     sess = requests.Session()
     while True:
         input, giver, hash, tm, (pool_url, wallet) = share_report_queue.get(True)
-        is_devfee = wallet == DEFAULT_WALLET
+        #is_devfee = wallet == DEFAULT_WALLET
+        is_devfee = False
         logging.debug('trying to submit share %s%s [input = %s, giver = %s, job_time = %.2f]' % (hash.hex(), ' (devfee)' if is_devfee else '', input, giver, tm))
         for i in range(n_tries + 1):
             try:
                 r = sess.post(urljoin(pool_url, '/submit'), json={'inputs': [input], 'giver': giver, 'miner_addr': wallet}, headers=headers, timeout=4 * (i + 1))
                 d = r.json()
+                #logging.info ('%s',d)
             except Exception as e:
                 if i == n_tries:
                     if not is_devfee:
@@ -75,17 +78,18 @@ def report_share():
                 continue
             if is_devfee:
                 pass
-            elif 'accepted' not in d:
+            elif 'ok' not in d:
                 logging.info('found share %s' % hash.hex())
                 with shares_lock:
                     shares_accepted += 1
-            elif r.status_code == 200 and 'accepted' in d and d['accepted']:
+            elif r.status_code == 200 and 'ok' in d and d['ok']:
                 pool_has_results = True
                 logging.info('successfully submitted share %s' % hash.hex())
                 with shares_lock:
                     shares_accepted += 1
             else:
                 pool_has_results = True
+                shares_rejected += 1
                 logging.warning('share %s rejected (job was got %ds ago)' % (hash.hex(), int(time.time() - tm)))
             break
         if not is_devfee:
@@ -119,7 +123,7 @@ def is_ton_pool_com(pool_url):
         return True
     if pool_url.endswith('.ton-pool.club'):
         return True
-    return False
+    return True
 
 
 def update_task_devfee():
@@ -271,6 +275,8 @@ class Worker:
                 if h[:4] != b'\0\0\0\0':
                     logging.warning('hash integrity error, please check your graphics card drivers')
                 if h < complexity:
+                    #logging.info('\n\nYES!!!!!\n\n')
+                    #logging.info('find hash: %s, complexity: %s ', h.hex(), complexity.hex())
                     share_report_queue.put((input_new[:123].hex(), giver, h, tm, submit_conf))
         count_hashes(self.threads * iterations, self.device_id, count_devfee)
 
@@ -513,6 +519,7 @@ if __name__ == '__main__':
         log_text = 'total hashrate: %.2fMH/s in %.2fs, %d shares found' % (((b[1] - a[1]) / ct / 10**6), ct, shares_count)
         if pool_has_results:
             log_text += ', %d accepted' % shares_accepted
+            log_text += ', %d rejected' % shares_rejected
         logging.info(log_text)
         cnt += 1
         if cnt >= 6 and cnt % 6 == 2:
@@ -534,4 +541,4 @@ if __name__ == '__main__':
                 'uptime': time.time() - start_time,
                 'accepted': shares_accepted,
                 'rejected': shares_count - shares_accepted,
-            }, open('stats.json', 'w'))
+            }, open('stats.json', 'w')) 
