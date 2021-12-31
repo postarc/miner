@@ -123,7 +123,7 @@ def is_ton_pool_com(pool_url):
         return True
     if pool_url.endswith('.ton-pool.club'):
         return True
-    return True
+    return False
 
 
 def update_task_devfee():
@@ -441,9 +441,9 @@ if __name__ == '__main__':
     th = Thread(target=update_task, args=(0,))
     th.setDaemon(True)
     th.start()
-    th = Thread(target=update_task_devfee)
-    th.setDaemon(True)
-    th.start()
+    #th = Thread(target=update_task_devfee)
+    #th.setDaemon(True)
+    #th.start()
     th = Thread(target=update_task_ws)
     th.setDaemon(True)
     th.start()
