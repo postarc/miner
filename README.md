@@ -35,22 +35,35 @@ Create a new wallet, select our mining pool, and the newly uploaded miner, and y
 ### Usage 
 
 usage: miner.exe [-h] [-p PLATFORM] [-d DEVICE] [-t THREADS] [--stats]
+
                  [--stats-devices] [--debug] [--silent]
+                 
                  POOL WALLET
 
 positional arguments:
+
   POOL             Pool URL
+  
   WALLET           Your wallet address
+  
 
 optional arguments:
+
   -h, --help       show this help message and exit
+  
   -p PLATFORM      Platform ID List, separated by commas (e.g. 0,1).
+  
   -d DEVICE        Device ID List, separated by commas (e.g 0-0,1,2-1). You
                    can use A-B where A is platform ID and B is device ID.
+                   
   -t THREADS       Number of threads. This is applied for all devices.
+  
   --stats          Dump stats to stats.json
+  
   --stats-devices  Dump devices information to devices.json
+  
   --debug          Show all logs
+  
   --silent         Only show warnings and errors
 
 ## Run Python code
