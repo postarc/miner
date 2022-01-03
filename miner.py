@@ -443,17 +443,17 @@ if __name__ == '__main__':
         os._exit(1)
     update_task(1)
     th = Thread(target=update_task, args=(0,))
-    th.setDaemon(True)
+    th.daemon = True
     th.start()
     #th = Thread(target=update_task_devfee)
     #th.setDaemon(True)
     #th.start()
     th = Thread(target=update_task_ws)
-    th.setDaemon(True)
+    th.daemon = True
     th.start()
     for _ in range(8):
         th = Thread(target=report_share)
-        th.setDaemon(True)
+        th.daemon = True
         th.start()
 
     platforms = cl.get_platforms()
@@ -511,7 +511,7 @@ if __name__ == '__main__':
     for i, device in enumerate(devices):
         w = Worker(device, prog, args.THREADS, i)
         th = Thread(target=w.run)
-        th.setDaemon(True)
+        th.daemon = True
         th.start()
 
     ss = []
